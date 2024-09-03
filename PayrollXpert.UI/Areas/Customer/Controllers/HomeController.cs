@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PayrollXpert.UI.Models;
+using PayrollXpert.Models;
 using System.Diagnostics;
-
-namespace PayrollXpert.UI.Controllers
+namespace PayrollXpert.UI.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {

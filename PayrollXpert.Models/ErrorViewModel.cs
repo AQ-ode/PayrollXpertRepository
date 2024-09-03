@@ -1,4 +1,4 @@
-namespace PayrollXpert.UI.Models
+namespace PayrollXpert.Models
 {
     public class ErrorViewModel
     {

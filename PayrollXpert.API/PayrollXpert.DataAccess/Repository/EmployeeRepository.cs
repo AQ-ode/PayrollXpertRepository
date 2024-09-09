@@ -4,7 +4,7 @@ using PayrollXpert.DataAccess.Data;
 
 namespace PayrollXpert.DataAccess.Repository
 {
-    public class EmployeeRepository : Repository<EmployeeRepository>, IEmployeeRepository
+    public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
     {
         private ApplicationDbContext _db;
         public EmployeeRepository(ApplicationDbContext db) : base(db)
@@ -13,10 +13,6 @@ namespace PayrollXpert.DataAccess.Repository
             _db = db;
         }
 
-        public void Add(Employee entity)
-        {
-            _db.Add(entity);
-        }
 
         public void update(Employee obj)
         {

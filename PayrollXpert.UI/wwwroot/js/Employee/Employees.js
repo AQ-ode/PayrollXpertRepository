@@ -4,13 +4,18 @@
 
 function loadDataTable() {
     $('#tblData').DataTable({
-        
+        "ajax": {
+            url: 'https://localhost:7230/api/Employee',
+            dataSrc: '' 
+        },
         columns: [
-            { data: 'name', "width": "20%" },
-            { data: 'salary', "width": "15%" },
-            { data: 'designation', "width": "15%" },
-            { data: 'cnic', "width": "20%" },
-            { data: 'address', "width": "20%" },
+            { data: 'fullName', width: '20%' },    
+            { data: 'salary', width: '15%' },     
+            { data: 'jobTitle', width: '15%' },    
+            { data: 'nationalId', width: '20%' },  
+            { data: 'address', width: '20%' },    
+            { data: 'department.name', width: '15%' },  
+
             {
                 data: 'id',
                 "render": function (data) {

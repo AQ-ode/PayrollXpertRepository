@@ -7,9 +7,7 @@
             DateOfBirth: $('#dob').val(),
             NationalId: $('#cnic').val(),
             JobTitle: $('#designation').val(),
-            Department: {
-                Name: $('#department').val()
-            },
+            DepartmentId: $('#department').val(), 
             DateOfJoining: $('#joiningDate').val(),
             EmploymentType: $('#employmentType').val(),
             Salary: $('#salary').val(),
@@ -24,13 +22,14 @@
             EmergencyContactPhone: $('#emergencyContactPhone').val(),
             EmergencyContactRelationship: $('#emergencyContactRelationship').val()
         };
-
+        console.log(formData);
         $.ajax({
             url: 'https://localhost:7230/api/Employee',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function (response) {
+                alert("Employee Created Succesfully");
             },
             error: function (xhr, status, error) {
                 console.error('Form submission failed:', status, error);
@@ -44,4 +43,27 @@
             }
         });
     });
+
+    function loadDepartments() {
+        $.ajax({
+            url: 'https://localhost:7230/api/Department',
+            type: 'GET',
+            success: function (departments) {
+                var $departmentSelect = $('#department');
+                $departmentSelect.empty();
+                $departmentSelect.append('<option value="" disabled selected>Select Department</option>');
+
+                $.each(departments, function (index, department) {
+                    $departmentSelect.append(
+                        $('<option></option>').val(department.id).text(department.name)
+                    );
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to load departments:', status, error);
+            }
+        });
+    }
+
+    loadDepartments();
 });

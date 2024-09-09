@@ -8,11 +8,9 @@ namespace PayrollXpert.API.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _webHostEnvironment;
         public EmployeeController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
-            _webHostEnvironment = webHostEnvironment;
         }
         [HttpPost]
 
@@ -31,7 +29,14 @@ namespace PayrollXpert.API.Controllers
                     _unitOfWork.save();
                 }
             }
-            return Ok(new { message = "Employee created successfully." });
+            return Ok(employee);
+        }
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+
+            List<Employee> objEmployeeList = _unitOfWork.Employee.GetAll(includeProperties: "Department").ToList();
+            return Ok(objEmployeeList);
         }
     }
 }

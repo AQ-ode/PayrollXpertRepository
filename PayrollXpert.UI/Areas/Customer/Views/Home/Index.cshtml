@@ -1,8 +1,43 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-primary">Dashboard</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-header">Total Employees</div>
+                    <div class="card-body">
+                        <h5 class="card-title">150</h5>
+                        <p class="card-text">Number of employees currently in the system.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Total Payrolls Processed</div>
+                    <div class="card-body">
+                        <h5 class="card-title">120</h5>
+                        <p class="card-text">Number of payrolls processed this month.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">Upcoming Deadlines</div>
+                    <div class="card-body">
+                        <h5 class="card-title">2</h5>
+                        <p class="card-text">Upcoming payroll deadlines this week.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </main>
 </div>

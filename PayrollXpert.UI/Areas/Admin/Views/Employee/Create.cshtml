@@ -1,0 +1,173 @@
+﻿@model PayrollXpert.Models.Employee
+
+<form method="post" enctype="multipart/form-data">
+@*     <input asp-for="ProfilePictureUrl" type="hidden" />
+ *@
+    <div class="border rounded p-4 mb-4 bg-light shadow-sm">
+        <h2 class="text-primary mb-4">Employee Information</h2>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="FullName" class="form-label">Full Name:</label>
+                <input asp-for="FullName" id="fullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Gender" class="form-label">Gender:</label>
+                <select asp-for="Gender" id="gender" class="form-select">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="DateOfBirth" class="form-label">Date of Birth:</label>
+                <input asp-for="DateOfBirth" id="dob" type="date" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="NationalId" class="form-label">National ID/SSN/CNIC:</label>
+                <input asp-for="NationalId" id="cnic" class="form-control" />
+                <span asp-validation-for="NationalId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="border rounded p-4 mb-4 bg-light shadow-sm">
+        <h2 class="text-primary mb-4">Job Information</h2>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="JobTitle" class="form-label">Job Title/Designation:</label>
+                <input asp-for="JobTitle" id="designation" class="form-control" />
+                <span asp-validation-for="JobTitle" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Department.Name" class="form-label">Department:</label>
+                <select id="department" name="Department.Name" class="form-select">
+                    <option value="" disabled selected>Select Department</option>
+                    <option value="HR">HR</option>
+                    <option value="IT">IT</option>
+                    <option value="Finance">Finance</option>
+                </select>
+                <span asp-validation-for="Department.Name" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="DateOfJoining" class="form-label">Date of Joining:</label>
+                <input asp-for="DateOfJoining" id="joiningDate" type="date" class="form-control" />
+                <span asp-validation-for="DateOfJoining" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="EmploymentType" class="form-label">Employment Type:</label>
+                <select asp-for="EmploymentType" id="employmentType" class="form-select">
+                    <option value="" disabled selected>Select Employment Type</option>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Part-Time">Part-Time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Intern">Intern</option>
+                </select>
+                <span asp-validation-for="EmploymentType" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="border rounded p-4 mb-4 bg-light shadow-sm">
+        <h2 class="text-primary mb-4">Payroll Information</h2>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="Salary" class="form-label">Salary:</label>
+                <input asp-for="Salary" id="salary" type="number" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="PayFrequency" class="form-label">Pay Frequency:</label>
+                <select asp-for="PayFrequency" id="payFrequency" class="form-select">
+                    <option value="" disabled selected>Select Pay Frequency</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Bi-Weekly">Bi-Weekly</option>
+                    <option value="Weekly">Weekly</option>
+                </select>
+                <span asp-validation-for="PayFrequency" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="BankAccountNumber" class="form-label">Bank Account Number:</label>
+                <input asp-for="BankAccountNumber" id="bankAccount" class="form-control" />
+                <span asp-validation-for="BankAccountNumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="BankName" class="form-label">Bank Name:</label>
+                <input asp-for="BankName" id="bankName" class="form-control" />
+                <span asp-validation-for="BankName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="TaxId" class="form-label">Tax ID:</label>
+                <input asp-for="TaxId" id="taxId" class="form-control" />
+                <span asp-validation-for="TaxId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="border rounded p-4 mb-4 bg-light shadow-sm">
+        <h2 class="text-primary mb-4">Contact Information</h2>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="PhoneNumber" class="form-label">Phone Number:</label>
+                <input asp-for="PhoneNumber" id="phoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Email" class="form-label">Email:</label>
+                <input asp-for="Email" id="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label asp-for="Address" class="form-label">Address:</label>
+                <textarea asp-for="Address" id="address" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="border rounded p-4 mb-4 bg-light shadow-sm">
+        <h2 class="text-primary mb-4">Emergency Contact Information</h2>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="EmergencyContactName" class="form-label">Emergency Contact Name:</label>
+                <input asp-for="EmergencyContactName" id="emergencyContactName" class="form-control" />
+                <span asp-validation-for="EmergencyContactName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="EmergencyContactPhone" class="form-label">Emergency Contact Phone:</label>
+                <input asp-for="EmergencyContactPhone" id="emergencyContactPhone" class="form-control" />
+                <span asp-validation-for="EmergencyContactPhone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="EmergencyContactRelationship" class="form-label">Relationship with Emergency Contact:</label>
+                <input asp-for="EmergencyContactRelationship" id="emergencyContactRelationship" class="form-control" />
+                <span asp-validation-for="EmergencyContactRelationship" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-end">
+        <button type="submit" id="send" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/Employee/AddEmployee.js"></script>
+   
+}

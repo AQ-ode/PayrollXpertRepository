@@ -38,5 +38,20 @@ namespace PayrollXpert.API.Controllers
             List<Employee> objEmployeeList = _unitOfWork.Employee.GetAll(includeProperties: "Department").ToList();
             return Ok(objEmployeeList);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int? id)
+        {
+            var productToBeDeleted = _unitOfWork.Employee.Get(u => u.Id == id);
+            if (productToBeDeleted == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.Employee.Remove(productToBeDeleted);
+            _unitOfWork.save();
+            return Ok();
+
+        }
     }
 }

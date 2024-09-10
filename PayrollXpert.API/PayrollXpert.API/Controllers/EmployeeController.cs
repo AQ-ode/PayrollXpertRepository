@@ -42,13 +42,13 @@ namespace PayrollXpert.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int? id)
         {
-            var productToBeDeleted = _unitOfWork.Employee.Get(u => u.Id == id);
-            if (productToBeDeleted == null)
+            var employeeToBeDeleted = _unitOfWork.Employee.Get(u => u.Id == id);
+            if (employeeToBeDeleted == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Employee.Remove(productToBeDeleted);
+            _unitOfWork.Employee.Remove(employeeToBeDeleted);
             _unitOfWork.save();
             return Ok();
 

@@ -1,7 +1,6 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PayrollXpert.API.Api_Models.Employees;
-using PayrollXpert.Models;
+using PayrollXpert.Models.Employees;
 
 namespace PayrollXpert.DataAccess.Data
 {
@@ -12,8 +11,14 @@ namespace PayrollXpert.DataAccess.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Department> Departments { get; set; }
+        public DbSet<EmployeeQualification> EmployeeQualifications { get; set; }
+        public DbSet<EmployeeShiftInformation> EmployeeShiftInformations { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
 
+        }
     }
 }

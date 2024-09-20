@@ -12,7 +12,7 @@ namespace PayrollXpert.DataAccess.Repository
         {
             _db = db;
             this.dbSet = _db.Set<T>();
-            _db.Employees.Include(u => u.Department).Include(u => u.DepartmentId);
+            //_db.Employees.Include(u => u.Department).Include(u => u.DepartmentId);
         }
         public void Add(T entity)
         {

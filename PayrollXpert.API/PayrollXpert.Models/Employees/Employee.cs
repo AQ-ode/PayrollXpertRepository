@@ -1,83 +1,85 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using PayrollXpert.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
+﻿using PayrollXpert.Models.Employees;
 namespace PayrollXpert.API.Api_Models.Employees
 {
+
+    using System.ComponentModel.DataAnnotations;
+
     public class Employee
     {
-
         [Key]
-        public int Id { get; set; }
+        public int EmployeeId { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string FullName { get; set; }
+        [Required(ErrorMessage = "Person Type is required.")]
+        public string PersonType { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Employee Number is required.")]
+        public int EmployeeNumber { get; set; }
+
+        [Required(ErrorMessage = "First Name is required.")]
+        [StringLength(50, ErrorMessage = "First Name cannot exceed 50 characters.")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name is required.")]
+        [StringLength(50, ErrorMessage = "Last Name cannot exceed 50 characters.")]
+        public string LastName { get; set; }
+
+
+        [Required(ErrorMessage = "Gender is required.")]
         public string Gender { get; set; }
 
-        [Required]
-        public DateTime DateOfBirth { get; set; }
-
-        [Required]
-        [StringLength(20)]
+        [Required(ErrorMessage = "National ID is required.")]
+        [StringLength(15, ErrorMessage = "National ID cannot exceed 15 characters.")]
         public string NationalId { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string JobTitle { get; set; }
+        [Required(ErrorMessage = "Start Date is required.")]
+        public DateTime StartDate { get; set; }
 
-        public int DepartmentId { get; set; }
-        [ForeignKey("DepartmentId")]
-        [ValidateNever]
+        public DateTime EndDate { get; set; }
 
-        public Department Department { get; set; }
+        [Required(ErrorMessage = "Date of Birth is required.")]
+        public DateTime DateOfBirth { get; set; }
 
-        [Required]
-        public DateTime DateOfJoining { get; set; }
+        [Required(ErrorMessage = "Country is required.")]
+        [StringLength(50, ErrorMessage = "Country name cannot exceed 50 characters.")]
+        public string Country { get; set; }
 
-        [Required]
-        public string EmploymentType { get; set; }
+        [Required(ErrorMessage = "Province is required.")]
+        [StringLength(50, ErrorMessage = "Province name cannot exceed 50 characters.")]
+        public string Province { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive value.")]
-        public double Salary { get; set; }
+        [Required(ErrorMessage = "City is required.")]
+        [StringLength(50, ErrorMessage = "City name cannot exceed 50 characters.")]
+        public string City { get; set; }
 
-        [Required]
-        public string PayFrequency { get; set; }
+        [Required(ErrorMessage = "Nationality is required.")]
+        [StringLength(50, ErrorMessage = "Nationality cannot exceed 50 characters.")]
+        public string Nationality { get; set; }
 
-        [StringLength(20)]
-        public string BankAccountNumber { get; set; }
+        [StringLength(50, ErrorMessage = "Religion name cannot exceed 50 characters.")]
+        public string Religion { get; set; }
 
-        [StringLength(100)]
-        public string BankName { get; set; }
+        [Required(ErrorMessage = "Father or Husband's Name is required.")]
+        [StringLength(100, ErrorMessage = "Father or Husband's Name cannot exceed 100 characters.")]
+        public string FatherOrHusbandName { get; set; }
 
-        [StringLength(20)]
-        public string TaxId { get; set; }
+        [StringLength(100, ErrorMessage = "Mother's Name cannot exceed 100 characters.")]
+        public string MotherName { get; set; }
 
-        [Required]
-        public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Marital Status is required.")]
+        public string MaritalStatus { get; set; }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [StringLength(100, ErrorMessage = "Spouse Name cannot exceed 100 characters.")]
+        public string SpouseName { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string Address { get; set; }
+        [Required(ErrorMessage = "Contact is required.")]
+        public string Contact { get; set; }
 
-        [StringLength(100)]
-        public string EmergencyContactName { get; set; }
+        [Required(ErrorMessage = "Emergency Contact is required.")]
+        public string EmergencyContact { get; set; }
 
-        public string EmergencyContactPhone { get; set; }
+        public EmployeeShiftInformation ShiftInformation { get; set; }
 
-        [StringLength(50)]
-        public string EmergencyContactRelationship { get; set; }
-
-        //    [StringLength(255)]
-        //    public string ProfilePictureUrl { get; set; }
-        //}
+        public EmployeeQualification Qualification { get; set; }
     }
+
 }

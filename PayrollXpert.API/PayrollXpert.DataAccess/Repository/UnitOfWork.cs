@@ -7,7 +7,9 @@ namespace PayrollXpert.DataAccess.Repository
     {
 
         public IEmployeeRepository Employee { get; private set; }
-        public IDepartmentRepository Department { get; private set; }
+        public IEmployeeQualificationRepository Qualification { get; private set; }
+        public IEmployeeShiftInformationRepository ShiftInformation { get; private set; }
+
 
 
         private ApplicationDbContext _db;
@@ -16,7 +18,9 @@ namespace PayrollXpert.DataAccess.Repository
 
             _db = db;
             Employee = new EmployeeRepository(_db);
-            Department = new DepartmentRepository(_db);
+            Qualification = new EmployeeQualificationRepository(_db);
+            ShiftInformation = new EmployeeShiftInformationRepository(_db);
+
 
 
         }

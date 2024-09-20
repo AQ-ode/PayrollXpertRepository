@@ -1,69 +1,117 @@
-﻿$(document).ready(function () {
-    $('#send').click(function (event) {
-        event.preventDefault();
-        var formData = {
-            FullName: $('#fullName').val(),
-            Gender: $('#gender').val(),
-            DateOfBirth: $('#dob').val(),
-            NationalId: $('#cnic').val(),
-            JobTitle: $('#designation').val(),
-            DepartmentId: $('#department').val(), 
-            DateOfJoining: $('#joiningDate').val(),
-            EmploymentType: $('#employmentType').val(),
-            Salary: $('#salary').val(),
-            PayFrequency: $('#payFrequency').val(),
-            BankAccountNumber: $('#bankAccount').val(),
-            BankName: $('#bankName').val(),
-            TaxId: $('#taxId').val(),
-            PhoneNumber: $('#phoneNumber').val(),
-            Email: $('#email').val(),
-            Address: $('#address').val(),
-            EmergencyContactName: $('#emergencyContactName').val(),
-            EmergencyContactPhone: $('#emergencyContactPhone').val(),
-            EmergencyContactRelationship: $('#emergencyContactRelationship').val()
-        };
-        console.log(formData);
-        $.ajax({
-            url: 'https://localhost:7230/api/Employee',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(formData),
-            success: function (response) {
-                alert("Employee Created Succesfully");
-            },
-            error: function (xhr, status, error) {
-                console.error('Form submission failed:', status, error);
-                var response = JSON.parse(xhr.responseText);
-                for (var key in response.errors) {
-                    var errorMessages = response.errors[key];
-                    if (errorMessages.length > 0) {
-                        $('#error' + key).text(errorMessages.join(', '));
-                    }
-                }
+﻿
+$('#send').click(function (event) {
+    event.preventDefault();
+    let startTime = $('#StartTime').val();
+    let endTime = $('#EndTime').val();
+    let convertToTimeSpan = (timeString) => {
+        let [hours, minutes] = timeString.split(':').map(num => parseInt(num, 10));
+        return `${hours}:${minutes}:00`;
+    };
+
+    let employee = {
+
+        EmployeeNumber: parseInt($('#EmployeeNumber').val(), 10),
+        FirstName: $('#FirstName').val(),
+        LastName: $('#LastName').val(),
+        PersonType: $('#PersonType').val(),
+        Gender: $('#Gender').val(),
+        NationalId: $('#NationalId').val(),
+        StartDate: $('#StartDate').val(),
+        EndDate: $('#EndDate').val(),
+        DateOfBirth: $('#DateOfBirth').val(),
+        Country: $('#Country').val(),
+        Province: $('#Province').val(),
+        City: $('#City').val(),
+        Nationality: $('#Nationality').val(),
+        Religion: $('#Religion').val(),
+        FatherOrHusbandName: $('#FatherOrHusbandName').val(),
+        MotherName: $('#MotherName').val(),
+        MaritalStatus: $('#MaritalStatus').val(),
+        SpouseName: $('#SpouseName').val(),
+        Contact: $('#Contact').val(),
+        EmergencyContact: $('#EmergencyContact').val(),
+        ShiftInformation: {
+            ShiftName: $('#ShiftName').val(),
+            StartTime: convertToTimeSpan(startTime),
+            EndTime: convertToTimeSpan(endTime)
+        },
+        Qualification: {
+            QualificationType: $('#QualificationType').val(),
+            DegreeTitle: $('#DegreeTitle').val(),
+            MajorSubject: $('#MajorSubject').val(),
+            MarksOrCGPA: parseInt($('#MarksOrCGPA').val(), 10),
+            StartDate: $('#QualificationStartDate').val(),
+            EndDate: $('#QualificationEndDate').val(),
+            Institute: $('#Institute').val()
+        }
+    }
+    $.ajax({
+        url: 'https://localhost:7230/api/Employee',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(employee),
+        success: function (response) {
+            Command: toastr["success"]("Employee Added Succesfully.")
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
             }
-        });
+        },
+        error: function (xhr, status, error) {
+            console.error('Form submission failed:', xhr.responseText, status, error);
+            alert('Failed to create employee. ' + xhr.responseText);
+        }
     });
+});
 
-    function loadDepartments() {
-        $.ajax({
-            url: 'https://localhost:7230/api/Department',
-            type: 'GET',
-            success: function (departments) {
-                var $departmentSelect = $('#department');
-                $departmentSelect.empty();
-                $departmentSelect.append('<option value="" disabled selected>Select Department</option>');
+$(document).ready(function () {
+    var currentSectionIndex = 0;
+    var totalSections = $('.form-section').length;
 
-                $.each(departments, function (index, department) {
-                    $departmentSelect.append(
-                        $('<option></option>').val(department.id).text(department.name)
-                    );
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error('Failed to load departments:', status, error);
-            }
-        });
+    function updateProgressBar() {
+        if (currentSectionIndex == 0) {
+            progress = 0;
+            $('.progress-bar').css('width', progress + '%').text(Math.round(progress) + '%');
+        }
+        else {
+            var progress = ((currentSectionIndex + 1) / totalSections) * 100;
+            $('.progress-bar').css('width', progress + '%').text(Math.round(progress) + '%');
+        }
+
     }
 
-    loadDepartments();
+    function showSection(index) {
+        $('.form-section').removeClass('current').eq(index).addClass('current');
+        updateProgressBar();
+    }
+
+    $('.next').click(function () {
+        if (currentSectionIndex < totalSections - 1) {
+            currentSectionIndex++;
+            showSection(currentSectionIndex);
+        }
+    });
+
+    $('.prev').click(function () {
+        if (currentSectionIndex > 0) {
+            currentSectionIndex--;
+            showSection(currentSectionIndex);
+        }
+    });
+
+    showSection(currentSectionIndex);
 });
+

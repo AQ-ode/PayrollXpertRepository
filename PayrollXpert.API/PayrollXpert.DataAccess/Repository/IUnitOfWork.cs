@@ -5,7 +5,8 @@ namespace PayrollXpert.DataAccess.Repository
     public interface IUnitOfWork
     {
         IEmployeeRepository Employee { get; }
-        IDepartmentRepository Department { get; }
+        IEmployeeQualificationRepository Qualification { get; }
+        IEmployeeShiftInformationRepository ShiftInformation { get; }
 
         void save();
     }

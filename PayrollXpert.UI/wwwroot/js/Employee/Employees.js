@@ -6,19 +6,27 @@ function loadDataTable() {
     $('#tblData').DataTable({
         "ajax": {
             url: 'https://localhost:7230/api/Employee',
-            dataSrc: '' 
+            dataSrc: ''
         },
         columns: [
-            { data: 'fullName', width: '20%' },    
-            { data: 'salary', width: '15%' },     
-            { data: 'jobTitle', width: '15%' },    
-            { data: 'nationalId', width: '20%' },  
-            { data: 'address', width: '20%' },    
-            { data: 'department.name', width: '15%' },  
-
+            { data: 'employeeNumber', width: '15%' },
+            { data: 'firstName', width: '15%' },
+            { data: 'lastName', width: '15%' },
+            { data: 'gender', width: '10%' },
+            { data: 'nationalId', width: '15%' },
             {
-                data: 'id',
-                "render": function (data) {
+                data: 'dateOfBirth',
+                width: '15%',
+                render: function (data, type, row) {
+                    let date = new Date(data);
+                    return date.toLocaleDateString();
+                }
+            },
+            { data: 'maritalStatus', width: '10%' },
+            { data: 'contact', width: '15%' },
+            {
+                data: 'employeeId',
+                render: function (data) {
                     return `
                         <div class="w-75 btn-group" role="group">
                             <a href="/admin/employee/upsert?id=${data}" class="btn btn-primary mx-2">
@@ -29,11 +37,12 @@ function loadDataTable() {
                             </a>
                         </div>`;
                 },
-                "width": "10%"
+                width: '15%'
             }
         ]
     });
 }
+
 function Delete(url) {
     Swal.fire({
         title: "Are you sure?",
@@ -49,12 +58,10 @@ function Delete(url) {
                 url: url,
                 type: 'DELETE',
                 success: function (data) {
-                    dataTable.ajax.reload();
-                    toastr.success(data.message);
+                    $('#tblData').DataTable().ajax.reload();
+                    toastr.error("Employee Deleted Succesfully");
                 }
             });
         }
     });
-
-
 }

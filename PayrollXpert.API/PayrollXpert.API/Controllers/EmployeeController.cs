@@ -8,41 +8,46 @@ namespace PayrollXpert.API.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public EmployeeController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
-        }
-        [HttpPost]
+            _webHostEnvironment = webHostEnvironment;
 
+        }
+
+        [HttpPost]
         public IActionResult Create([FromBody] Employee employee)
         {
+
             if (employee == null)
             {
                 return BadRequest(new { message = "Employee data is required." });
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    _unitOfWork.Employee.Add(employee);
-                    _unitOfWork.save();
-                }
+                return BadRequest(ModelState);
             }
+
+            _unitOfWork.Employee.Add(employee);
+
+            _unitOfWork.save();
             return Ok(employee);
         }
+
         [HttpGet]
         public IActionResult GetAll()
         {
 
-            List<Employee> objEmployeeList = _unitOfWork.Employee.GetAll(includeProperties: "Department").ToList();
+            List<Employee> objEmployeeList = _unitOfWork.Employee.GetAll().ToList();
             return Ok(objEmployeeList);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int? id)
         {
-            var employeeToBeDeleted = _unitOfWork.Employee.Get(u => u.Id == id);
+            var employeeToBeDeleted = _unitOfWork.Employee.Get(u => u.EmployeeId == id);
             if (employeeToBeDeleted == null)
             {
                 return NotFound();

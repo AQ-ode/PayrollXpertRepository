@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PayrollXpert.UI</title>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -11,10 +13,74 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="~/PayrollXpert.UI.styles.css" asp-append-version="true" />
+
+    <style>
+        #sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 56px; 
+            left: 0;
+            background-color: #f8f9fa; 
+            padding-top: 20px;
+            transition: width 0.4s ease, left 0.4s ease;
+            z-index: 1000;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+        }
+
+            #sidebar.collapsed {
+                left: -250px; 
+            }
+
+        .toggle-btn.collapsed {
+            left: 70px; 
+        }
+            #sidebar .nav-link {
+                color: #343a40; 
+                padding: 15px 20px;
+                display: flex;
+                align-items: center;
+            }
+
+                #sidebar .nav-link:hover {
+                    background-color: #e2e6ea; 
+                }
+
+                #sidebar .nav-link.active {
+                    background-color: #e2e6ea; 
+                    font-weight: bold;
+                }
+
+        .content {
+            margin-left: 250px;
+            margin-top: 70px; 
+            transition: margin-left 0.4s ease;
+        }
+
+        #sidebar.collapsed + .content {
+            margin-left: 0; 
+        }
+
+        .navbar {
+            z-index: 1050; 
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 66px; 
+            left: 230px; 
+            transition: left 0.4s ease;
+            z-index: 1100;
+        }
+
+        #sidebar.collapsed ~ .toggle-btn {
+            left: 70px; 
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3 fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">PayrollXpert</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -63,24 +129,77 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - PayrollXpert.UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+    <style>
+        .content {
+            margin-left: 250px;
+            margin-top: 56px; 
+            transition: margin-left 0.4s ease;
+        }
+    </style>
+
+    <button class="btn btn-light toggle-btn" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-users"></i> <span>Employee Management</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-money-bill-wave"></i> <span>Payroll Management</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-chart-line"></i> <span>Reports</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-cogs"></i> <span>Settings</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" aria-disabled="true">
+                    <i class="fas fa-construction"></i> <span>Under Development</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2024 - PayrollXpert.UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts here -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#toggleSidebar').click(function () {
+                $('#sidebar').toggleClass('collapsed');
+                $('.content').toggleClass('collapsed');
+                $(this).toggleClass('collapsed'); 
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

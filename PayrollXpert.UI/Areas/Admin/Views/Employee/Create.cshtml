@@ -29,7 +29,7 @@
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label>Employee Number</label>
-                    <input type="text" class="form-control" id="EmployeeNumber" name="Employee.EmployeeNumber" required>
+                    <input type="number" class="form-control" id="EmployeeNumber" name="Employee.EmployeeNumber" required>
                 </div>
                 <div class="col-md-4">
                     <label>First Name</label>
@@ -51,7 +51,6 @@
                         <option value="Contractual">Contractual</option>
                     </select>
                 </div>
-
                 <div class="col-md-4">
                     <label>Gender</label>
                     <select class="form-select" id="Gender" name="Employee.Gender" required>
@@ -62,7 +61,6 @@
                 </div>
             </div>
 
-            <!-- Additional Employee Information Fields -->
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label>National Identity/CNIC</label>
@@ -85,26 +83,48 @@
                 </div>
                 <div class="col-md-4">
                     <label>Country</label>
-                    <input type="text" class="form-control" id="Country" name="Employee.Country" required>
+                    <select class="form-select" id="Country" name="Employee.Country" required>
+                        <option value="Pakistan" data-code="+92">Pakistan</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label>Province</label>
-                    <input type="text" class="form-control" id="Province" name="Employee.Province" required>
+                    <select class="form-select" id="Province" name="Employee.Province" required>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Sindh">Sindh</option>
+                        <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+                        <option value="Balochistan">Balochistan</option>
+                    </select>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label>City</label>
-                    <input type="text" class="form-control" id="City" name="Employee.City" required>
+                    <select class="form-select" id="City" name="Employee.City" required>
+                        <option value="Lahore">Lahore</option>
+                        <option value="Karachi">Karachi</option>
+                        <option value="Islamabad">Islamabad</option>
+                        <option value="Peshawar">Peshawar</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label>Nationality</label>
-                    <input type="text" class="form-control" id="Nationality" name="Employee.Nationality" required>
+                    <select class="form-select" id="Nationality" name="Employee.Nationality" required>
+                        <option value="Pakistani">Pakistani</option>
+                        <option value="British">British</option>
+                        <option value="American">American</option>
+                        <option value="Canadian">Canadian</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label>Religion</label>
-                    <input type="text" class="form-control" id="Religion" name="Employee.Religion">
+                    <select class="form-select" id="Religion" name="Employee.Religion">
+                        <option value="Islam">Islam</option>
+                        <option value="Christianity">Christianity</option>
+                        <option value="Hinduism">Hinduism</option>
+                        <option value="Sikhism">Sikhism</option>
+                    </select>
                 </div>
             </div>
 
@@ -133,11 +153,11 @@
                 </div>
                 <div class="col-md-4">
                     <label>Contact</label>
-                    <input type="text" class="form-control" id="Contact" name="Employee.Contact" required>
+                    <input type="tel" class="form-control" id="Contact" name="Employee.Contact" required>
                 </div>
                 <div class="col-md-4">
                     <label>Emergency Contact</label>
-                    <input type="text" class="form-control" id="EmergencyContact" name="Employee.EmergencyContact" required>
+                    <input type="tel" class="form-control" id="EmergencyContact" name="Employee.EmergencyContact" required>
                 </div>
             </div>
 
@@ -183,18 +203,26 @@
                 </div>
                 <div class="col-md-4">
                     <label>Degree Title</label>
-                    <input type="text" class="form-control" id="DegreeTitle" name="Employee.Qualification.DegreeTitle" required>
+                    <select class="form-select" id="DegreeTitle" name="Employee.Qualification.DegreeTitle" required>
+                        <option value="Bachelor of Science">Bachelor of Science</option>
+                        <option value="Bachelor of Arts">Bachelor of Arts</option>
+                        <option value="Master of Science">Master of Science</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label>Major Subject</label>
-                    <input type="text" class="form-control" id="MajorSubject" name="Employee.Qualification.MajorSubject" required>
+                    <select class="form-select" id="MajorSubject" name="Employee.Qualification.MajorSubject" required>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Business Administration">Business Administration</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                    </select>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label>Mark/CGPA</label>
-                    <input type="text" class="form-control" id="MarksOrCGPA" name="Employee.Qualification.MarksOrCGPA" required>
+                    <input type="number" class="form-control" id="MarksOrCGPA" name="Employee.Qualification.MarksOrCGPA" required>
                 </div>
                 <div class="col-md-4">
                     <label>Start Date</label>
@@ -209,19 +237,19 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label>Institute</label>
-                    <input type="text" class="form-control" id="Institute" name="Employee.Qualification.Institute" required>
+                    <select class="form-select" id="Institute" name="Employee.Qualification.Institute" required>
+                        <option value="National University of Sciences and Technology">National University of Sciences and Technology</option>
+                        <option value="University of Karachi">University of Karachi</option>
+                        <option value="Lahore University of Management Sciences">Lahore University of Management Sciences</option>
+                    </select>
                 </div>
-
             </div>
 
             <button type="button" class="btn btn-info prev">Previous</button>
             <button type="submit" id="send" class="btn btn-success">Submit</button>
         </div>
     </form>
-
-
 </div>
-
 @section Scripts {
     <script src="~/js/Employee/AddEmployee.js"></script>
 

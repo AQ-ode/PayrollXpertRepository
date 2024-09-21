@@ -115,3 +115,9 @@ $(document).ready(function () {
     showSection(currentSectionIndex);
 });
 
+$(document).ready(function () {
+    $('#NationalId').inputmask('99999-9999999-9');
+    $('#Contact').inputmask('9999-9999999');
+    $('#EmergencyContact').inputmask('9999-9999999');
+
+});

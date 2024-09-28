@@ -8,7 +8,7 @@ namespace PayrollXpert.UI.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult Create()
+        public IActionResult Upsert()
         {
             return View();
         }

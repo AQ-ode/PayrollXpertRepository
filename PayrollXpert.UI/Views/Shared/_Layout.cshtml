@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="~/PayrollXpert.UI.styles.css" asp-append-version="true" />
 
     <style>
+        html, body {
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
         #sidebar {
             height: 100vh;
             width: 250px;
@@ -53,28 +56,29 @@
 
         .content {
             margin-left: 250px;
-            margin-top: 70px; 
+            margin-top: 78px; /* This margin should be equal to or greater than the height of the navbar */
             transition: margin-left 0.4s ease;
         }
 
         #sidebar.collapsed + .content {
-            margin-left: 0; 
+            margin-left: 0;
         }
 
         .navbar {
-            z-index: 1050; 
+            z-index: 1050; /* Ensure navbar stays on top */
+            height: 56px; /* Navbar height */
         }
 
         .toggle-btn {
             position: fixed;
-            top: 66px; 
-            left: 230px; 
+            top: 66px; /* Adjust for the height of the navbar */
+            left: 230px;
             transition: left 0.4s ease;
             z-index: 1100;
         }
 
         #sidebar.collapsed ~ .toggle-btn {
-            left: 70px; 
+            left: 70px;
         }
     </style>
 </head>
@@ -101,7 +105,7 @@
                                     <a class="nav-link text-white" asp-area="Admin" asp-controller="Employee" asp-action="Index">Employee List</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="Admin" asp-controller="Employee" asp-action="Create">Add New Employee</a>
+                                    <a class="nav-link text-white" asp-area="Admin" asp-controller="Employee" asp-action="Upsert">Add New Employee</a>
                                 </li>
                             </ul>
                         </li>
@@ -145,7 +149,7 @@
     <div id="sidebar">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-users"></i> <span>Employee Management</span></a>
@@ -188,6 +192,8 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>

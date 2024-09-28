@@ -38,6 +38,8 @@ app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles(); // Ensure static files are served
+
 app.UseAuthorization();
 
 app.MapControllers();

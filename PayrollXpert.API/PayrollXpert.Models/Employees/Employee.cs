@@ -1,7 +1,6 @@
 ﻿using PayrollXpert.Models.Employees;
 namespace PayrollXpert.API.Api_Models.Employees
 {
-
     using System.ComponentModel.DataAnnotations;
 
     public class Employee
@@ -26,6 +25,9 @@ namespace PayrollXpert.API.Api_Models.Employees
 
         [Required(ErrorMessage = "Gender is required.")]
         public string Gender { get; set; }
+
+        public string? ProfileImagePath { get; set; }
+
 
         [Required(ErrorMessage = "National ID is required.")]
         [StringLength(15, ErrorMessage = "National ID cannot exceed 15 characters.")]

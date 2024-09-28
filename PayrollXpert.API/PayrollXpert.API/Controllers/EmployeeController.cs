@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PayrollXpert.API.Api_Models.Employees;
 using PayrollXpert.DataAccess.Repository;
+using PayrollXpert.Models.ViewModels;
 namespace PayrollXpert.API.Controllers
 {
     [Route("api/[controller]")]
@@ -16,11 +17,10 @@ namespace PayrollXpert.API.Controllers
 
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] Employee employee)
+        [HttpPost("upsert")]
+        public IActionResult Upsert([FromForm] EmployeeViewModel model)
         {
-
-            if (employee == null)
+            if (model.Employee == null)
             {
                 return BadRequest(new { message = "Employee data is required." });
             }
@@ -30,11 +30,76 @@ namespace PayrollXpert.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            _unitOfWork.Employee.Add(employee);
+            if (model.ProfileImage != null && model.ProfileImage.Length > 0)
+            {
+
+                var uploadsFolder = Path.Combine("uploads");
+
+
+                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
+                if (!Directory.Exists(uploadsFolderPath))
+                {
+                    Directory.CreateDirectory(uploadsFolderPath);
+                }
+
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ProfileImage.FileName);
+                var filePath = Path.Combine(uploadsFolderPath, fileName);
+
+
+                if (!string.IsNullOrEmpty(model.Employee.ProfileImagePath))
+                {
+                    var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), model.Employee.ProfileImagePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProfileImage.CopyTo(stream);
+                }
+
+
+                model.Employee.ProfileImagePath = $"{Request.Scheme}://{Request.Host}/{uploadsFolder}/{fileName}";
+            }
+
+            if (model.Employee.EmployeeId == 0)
+            {
+                _unitOfWork.Employee.Add(model.Employee);
+            }
+            else
+            {
+                _unitOfWork.Employee.update(model.Employee);
+            }
 
             _unitOfWork.save();
+            return Ok(model.Employee);
+        }
+
+        [HttpGet("upsert/{id}")]
+        public IActionResult Upsert(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound(new { message = "Employee not found" });
+            }
+
+            var employee = _unitOfWork.Employee
+                .Get(
+                    u => u.EmployeeId == id,
+                    includeProperties: "ShiftInformation,Qualification"
+                );
+
+            if (employee == null)
+            {
+                return NotFound(new { message = "Employee not found" });
+            }
+
             return Ok(employee);
         }
+
 
         [HttpGet]
         public IActionResult GetAll()

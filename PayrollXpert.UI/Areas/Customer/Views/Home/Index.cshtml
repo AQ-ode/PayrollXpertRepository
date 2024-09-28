@@ -1,6 +1,80 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .custom-card {
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Adjust shadow to be lighter */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 15px; /* Adjust padding to be smaller */
+        height: 175px; 
+    }
+
+        .custom-card:hover {
+            transform: translateY(-7px); /* Slight hover effect */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
+        }
+
+    .card-header {
+        font-size: 1.1rem; /* Slightly smaller font for headers */
+        font-weight: 600;
+    }
+
+    .card-title {
+        font-size: 2rem; /* Slightly smaller title */
+        font-weight: 700;
+    }
+
+    .card-text {
+        font-size: 0.9rem; /* Reduce text size */
+        font-weight: 400;
+        margin-top: 8px;
+    }
+
+    .text-primary {
+        font-weight: 700; /* Bold heading for Dashboard */
+    }
+
+    /* Specific background color tweaks */
+    .bg-info {
+        background-color: #17a2b8 !important;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+    }
+
+    .bg-warning {
+        background-color: #ffc107 !important;
+    }
+
+    .bg-danger {
+        background-color: #dc3545 !important;
+    }
+
+    .bg-secondary {
+        background-color: #6c757d !important;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+        color: #343a40 !important;
+    }
+
+    /* Ensure all cards have the same size */
+    .row .col-md-4 .card {
+        min-height: 187px;
+    }
+
+    /* Fix the issue with last card alignment */
+    .row.mb-4 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    
+</style>
 <div class="container">
     <main role="main" class="pb-3">
         <div class="row">
@@ -9,9 +83,10 @@
                 <hr />
             </div>
         </div>
+
         <div class="row mb-4">
             <div class="col-md-4">
-                <div class="card text-white bg-info mb-3">
+                <div class="card custom-card bg-info text-white">
                     <div class="card-header">Total Employees</div>
                     <div class="card-body">
                         <h5 class="card-title">150</h5>
@@ -20,7 +95,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-success mb-3">
+                <div class="card custom-card bg-success text-white">
                     <div class="card-header">Total Payrolls Processed</div>
                     <div class="card-body">
                         <h5 class="card-title">120</h5>
@@ -29,7 +104,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-warning mb-3">
+                <div class="card custom-card bg-warning text-white">
                     <div class="card-header">Upcoming Deadlines</div>
                     <div class="card-body">
                         <h5 class="card-title">2</h5>
@@ -38,9 +113,10 @@
                 </div>
             </div>
         </div>
+
         <div class="row mb-4">
             <div class="col-md-4">
-                <div class="card text-white bg-danger mb-3">
+                <div class="card custom-card bg-danger text-white">
                     <div class="card-header">Pending Approvals</div>
                     <div class="card-body">
                         <h5 class="card-title">5</h5>
@@ -49,7 +125,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-secondary mb-3">
+                <div class="card custom-card bg-secondary text-white">
                     <div class="card-header">New Hires This Month</div>
                     <div class="card-body">
                         <h5 class="card-title">8</h5>
@@ -58,7 +134,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card text-white bg-light text-dark mb-3">
+                <div class="card custom-card bg-light text-dark">
                     <div class="card-header">Employee Turnover Rate</div>
                     <div class="card-body">
                         <h5 class="card-title">10%</h5>

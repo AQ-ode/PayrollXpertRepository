@@ -30,39 +30,40 @@ namespace PayrollXpert.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (model.ProfileImage != null && model.ProfileImage.Length > 0)
+            var existingEmployee = _unitOfWork.Employee.Get(u => u.EmployeeId == model.Employee.EmployeeId);
+
+            if (existingEmployee != null)
             {
-
-                var uploadsFolder = Path.Combine("uploads");
-
-
-                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
-                if (!Directory.Exists(uploadsFolderPath))
+                if (model.ProfileImage != null && model.ProfileImage.Length > 0)
                 {
-                    Directory.CreateDirectory(uploadsFolderPath);
-                }
-
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ProfileImage.FileName);
-                var filePath = Path.Combine(uploadsFolderPath, fileName);
-
-
-                if (!string.IsNullOrEmpty(model.Employee.ProfileImagePath))
-                {
-                    var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), model.Employee.ProfileImagePath.TrimStart('/'));
+                    var oldImagePath = Path.Combine("UploadedFiles", "profile", existingEmployee.ProfileImagePath);
                     if (System.IO.File.Exists(oldImagePath))
                     {
                         System.IO.File.Delete(oldImagePath);
                     }
-                }
+                    var uploadsFolder = Path.Combine("UploadedFiles", "profile");
+                    var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                    if (!Directory.Exists(uploadsFolderPath))
+                    {
+                        Directory.CreateDirectory(uploadsFolderPath);
+                    }
+
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ProfileImage.FileName);
+                    var filePath = Path.Combine(uploadsFolderPath, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.ProfileImage.CopyTo(stream);
+                    }
+
+                    model.Employee.ProfileImagePath = fileName;
+                }
+                else
                 {
-                    model.ProfileImage.CopyTo(stream);
+
+                    model.Employee.ProfileImagePath = existingEmployee.ProfileImagePath;
                 }
-
-
-                model.Employee.ProfileImagePath = $"{Request.Scheme}://{Request.Host}/{uploadsFolder}/{fileName}";
             }
 
             if (model.Employee.EmployeeId == 0)
@@ -77,6 +78,7 @@ namespace PayrollXpert.API.Controllers
             _unitOfWork.save();
             return Ok(model.Employee);
         }
+
 
         [HttpGet("upsert/{id}")]
         public IActionResult Upsert(int? id)
@@ -117,7 +119,24 @@ namespace PayrollXpert.API.Controllers
             {
                 return NotFound();
             }
+            if (!string.IsNullOrEmpty(employeeToBeDeleted.ProfileImagePath))
+            {
+                var uploadsFolder = Path.Combine("UploadedFiles", "profile");
+                var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), uploadsFolder);
+                var oldImagePath = Path.Combine(uploadsFolderPath, employeeToBeDeleted.ProfileImagePath);
 
+                if (System.IO.File.Exists(oldImagePath))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        return StatusCode(500, new { message = "Error deleting the profile image.", details = ex.Message });
+                    }
+                }
+            }
             _unitOfWork.Employee.Remove(employeeToBeDeleted);
             _unitOfWork.save();
             return Ok();

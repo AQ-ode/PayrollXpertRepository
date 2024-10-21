@@ -1,5 +1,17 @@
 ﻿$(document).ready(function () {
     loadDataTable();
+    $('#ProfileImage').change(function (event) {
+        const input = event.target;
+        const profileImagePreview = $('#profileImagePreview');
+        profileImagePreview.attr('src', '').hide();
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profileImagePreview.attr('src', e.target.result).show();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
 });
 
 function loadDataTable() {
@@ -13,9 +25,10 @@ function loadDataTable() {
             {
                 data: "profileImagePath",
                 render: function (data) {
-                    console.log(data);
-                    return '<img src="' + data + '" class="card-img-top rounded" style="width: 100%; height: 100%; object-fit: cover;" />';
+                    const baseUrl = 'https://localhost:7230/UploadedFiles/profile/';
+                    return '<img src="' + baseUrl + data + '" class="card-img-top rounded" style="width: 50px; height: 50px; object-fit: cover;" />';
                 }
+
             },
 
             { data: 'employeeNumber', width: '15%' },
@@ -110,6 +123,15 @@ function prefillEmployeeForm(data) {
         $('#QualificationEndDate').val(data.qualification.endDate.split('T')[0]);
         $('#Institute').val(data.qualification.institute).change();
     }
+    $('#OldProfileImagePath').val(data.profileImagePath);
+    if (data.profileImagePath) {
+        const baseUrl = 'https://localhost:7230/UploadedFiles/profile/';
+        $('#profileImagePreview').attr('src', baseUrl + data.profileImagePath).show();
+        existingImageAvailable = true;
+    } else {
+        $('#profileImagePreview').attr('src', '').hide();
+        existingImageAvailable = false;
+    }
 }
 function editEmployee(employeeId) {
     $.ajax({
@@ -140,7 +162,9 @@ $('#send').click(function (event) {
 
     let formData = new FormData();
 
-    formData.append('EmployeeId', employeeId ? parseInt(employeeId, 10) : 0);
+    formData.append('Employee.EmployeeId', employeeId ? parseInt(employeeId, 10) : 0);
+
+    console.log(employeeId);
     formData.append('Employee.EmployeeNumber', parseInt($('#EmployeeNumber').val(), 10));
     formData.append('Employee.FirstName', $('#FirstName').val());
     formData.append('Employee.LastName', $('#LastName').val());
@@ -212,6 +236,7 @@ $('#send').click(function (event) {
             alert('Failed to create employee. ' + xhr.responseText);
         }
     });
+
 });
 
 $(document).ready(function () {
@@ -256,6 +281,7 @@ $(document).ready(function () {
     $('#NationalId').inputmask('99999-9999999-9');
     $('#Contact').inputmask('9999-9999999');
     $('#EmergencyContact').inputmask('9999-9999999');
+
 
 });
 let employeeId = null;

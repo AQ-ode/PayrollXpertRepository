@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using PayrollXpert.DataAccess.Data;
 using PayrollXpert.DataAccess.Repository;
 
@@ -34,6 +35,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles")),
+    RequestPath = "/UploadedFiles"
+});
+
 app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();

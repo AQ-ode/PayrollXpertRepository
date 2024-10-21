@@ -42,6 +42,7 @@ namespace PayrollXpert.DataAccess.Repository
                 objFromDb.SpouseName = obj.SpouseName;
                 objFromDb.Contact = obj.Contact;
                 objFromDb.EmergencyContact = obj.EmergencyContact;
+                objFromDb.ProfileImagePath = obj.ProfileImagePath;
 
 
                 if (obj.ShiftInformation != null)
